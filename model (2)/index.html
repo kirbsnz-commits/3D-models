@@ -16,14 +16,15 @@
 </head>
 <body>
 
-    <model-viewer 
+   <model-viewer 
         src="3_21_2026.glb" 
         ar 
-        ar-modes="webxr scene-viewer quick-look" 
         camera-controls 
-        shadow-intensity="1" 
         auto-rotate 
-        touch-action="pan-y">
+        shadow-intensity="1"
+        camera-orbit="45deg 55deg 15m" 
+        field-of-view="30deg"
+        min-camera-orbit="auto auto auto">
     </model-viewer>
 
 </body>

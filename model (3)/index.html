@@ -1,23 +1,42 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Model Viewer</title>
+    <title>DomainVisuals 3D Viewer</title>
     <meta charset="utf-8">
+    <meta name="description" content="3D Model Viewer">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" href="./styles.css" rel="stylesheet"/>
+    <style>
+      body { margin: 0; }
+      model-viewer { width: 100%; height: 95vh; background-color: #f0f0f0; }
+    </style>
   </head>
   <body>
-    <!-- Point the src to your ACTUAL file name here -->
-    <model-viewer src="3DModel.obj.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="agx" poster="poster.webp" shadow-intensity="1">
+    <!-- 
+      IMPORTANT: Ensure your file in the GitHub folder is named EXACTLY "3DModel.obj.glb". 
+      If it is actually named "model (3).glb", change the src below to match it.
+    -->
+    <model-viewer 
+      src="3DModel.obj.glb" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      tone-mapping="agx" 
+      poster="poster.webp" 
+      shadow-intensity="1">
+      
       <div class="progress-bar hide" slot="progress-bar">
           <div class="update-bar"></div>
       </div>
       <button slot="ar-button" id="ar-button">
           View in your space
       </button>
+      <div id="ar-prompt">
+          <img src="ar_hand_prompt.png">
+      </div>
     </model-viewer>  
 
-    <!-- Corrected the version link below -->
+    <!-- Corrected: Replaced the placeholder with a working version of the viewer engine -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   </body>
 </html>

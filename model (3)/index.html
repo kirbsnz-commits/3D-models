@@ -4,12 +4,11 @@
     <title>DomainVisuals 3D Viewer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" href="./styles.css" rel="stylesheet"/>
     <style>
       body { margin: 0; }
       model-viewer { 
         width: 100%; 
-        height: 95vh; 
+        height: 100vh; 
         background-color: #f0f0f0;
       }
       
@@ -25,10 +24,9 @@
         border-radius: 10px;
         background-color: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.5);
-        text-align: center;
       }
 
-      /* Moving Download Bar */
+      /* Moving Blue Bar */
       .update-bar {
         background-color: #007bff;
         width: 0%;
@@ -37,7 +35,6 @@
         transition: width 0.3s;
       }
 
-      /* "Downloading" Text */
       .download-text {
         position: absolute;
         top: -25px;
@@ -46,13 +43,18 @@
         font-family: Arial, sans-serif;
         font-weight: bold;
         font-size: 14px;
+        text-align: center;
       }
 
-      .hide { display: none; }
+      /* This class will be added by the script to hide the bar */
+      .hide { 
+        display: none !important; 
+      }
     </style>
   </head>
   <body>
     <model-viewer 
+      id="viewer"
       src="3DModel.obj.glb" 
       poster="poster.webp"
       loading="eager"
@@ -64,15 +66,31 @@
       tone-mapping="agx" 
       shadow-intensity="1">
       
-      <div class="progress-bar" slot="progress-bar">
+      <div class="progress-bar" slot="progress-bar" id="progress-container">
           <div class="download-text">Downloading 3D Model...</div>
-          <div class="update-bar"></div>
+          <div class="update-bar" id="update-bar"></div>
       </div>
 
-      <button slot="ar-button" id="ar-button">View in your space</button>
+      <button slot="ar-button" id="ar-button" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);">View in your space</button>
     </model-viewer>  
 
-    <!-- Uses the stable model-viewer engine -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <script>
+      // This script handles the progress bar logic
+      const modelViewer = document.querySelector('#viewer');
+      const progressContainer = document.querySelector('#progress-container');
+      const updateBar = document.querySelector('#update-bar');
+
+      modelViewer.addEventListener('progress', (event) => {
+        const { totalProgress } = event.detail;
+        updateBar.style.width = `${totalProgress * 100}%`;
+        
+        if (totalProgress === 1) {
+          // Hide the entire container once download is 100%
+          progressContainer.classList.add('hide');
+        }
+      });
+    </script>
   </body>
 </html>
